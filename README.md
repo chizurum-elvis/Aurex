@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aurex — Real-Time Commodity Terminal
 
-## Getting Started
+Aurex is an ultra-clean, minimalist market terminal dashboard optimized for monitoring real-time commodity indices, streaming live feeds, and evaluating historical charting metrics. Built with Next.js 14, TypeScript, and Tailwind CSS, it delivers a high-fidelity SaaS interface balanced with absolute performance and modern layout controls.
 
-First, run the development server:
+> **"Real-time commodity prices. All sources. One view."**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Live Index Feed:** Real-time data streaming architectures highlighting immediate commodity market evaluation.
+- **Unified Identity Management:** Powered securely by Clerk with multi-account isolation workflows.
+- **Dynamic Context Scaling Profile:** User-specific state pipelines fallback seamlessly to primary authenticated handles (e.g., Gmail addresses) if custom localized profile updates have not been explicitly saved.
+- **Synchronized Visual Branding:** Premium custom SVG brand mark typography carefully balanced and aligned inline with an optimized image asset loader context.
+- **Global Layout Interactivity:** Persistent global layout state management using unified client-side state stores via Zustand (including dynamic responsive menu sidebar triggers).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠️ Tech Stack Architecture
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework:** Next.js 14 (App Router Architecture)
+- **Language:** TypeScript (Strict Type Boundaries)
+- **Styling:** Tailwind CSS + Lucide Icons
+- **State Management:** Zustand
+- **Authentication & Security:** Clerk Authentication Engine
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 Core Directory Map
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+aurex-terminal/
+├── app/
+│   ├── dashboard/
+│   │   ├── analytics/      # Historical charts tracking metrics
+│   │   ├── explore/        # Commodity listing index modules
+│   │   ├── watchlist/      # Personalized user monitoring vectors
+│   │   └── layout.tsx      # Multi-account session waterfall routing setup
+│   ├── layout.tsx          # Master template wrapper & Clerk Provider initialization
+│   └── page.tsx            # Global platform landing gateway
+├── components/
+│   ├── AuthControls.tsx    # Session login & signup trigger interfaces
+│   ├── Logo.tsx            # Inline structural branding typography layout
+│   └── Navbar.tsx          # Top nav shell featuring dynamic breadcrumbs
+├── context/
+│   └── IdentityContext.tsx # User-isolated localized local storage profile engine
+├── lib/
+│   └── store.ts            # Global application UX sidebar triggers (Zustand)
+├── public/
+│   └── logo.png            # Premium high-resolution visual icon asset
+└── types/
+    └── index.ts            # Global core interface data shapes
