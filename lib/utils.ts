@@ -5,5 +5,4 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const serializeData = <T>(data: T): T => JSON.parse(JSON.stringify(data));
 

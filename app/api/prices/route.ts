@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
-import { connectToDatabase } from '@/database/mongoose'; // Your connection function
+import { connectToDatabase } from '@/database/mongoose';
 import { PriceQuerySchema } from '@/lib/validations/price-schema';
 
 export async function GET(request: NextRequest) {

@@ -2,7 +2,7 @@
 
 import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
-import mongoose from 'mongoose'; // <-- Imported mongoose for type casting
+import mongoose from 'mongoose';
 import { connectToDatabase } from '@/database/mongoose';
 import { WatchlistActionSchema } from '@/lib/validations/price-schema';
 

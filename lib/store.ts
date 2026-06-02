@@ -1,11 +1,9 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { UserProfileStore} from "@/types";
+import { SidebarState} from "@/types";
 
-interface SidebarState {
-    isSidebarOpen: boolean;
-    toggleSidebar: () => void;
-}
+
 
 export const useSidebarStore = create<SidebarState>((set) => ({
     isSidebarOpen: true, // Default open state on desktop mount

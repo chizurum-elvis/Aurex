@@ -69,3 +69,8 @@ export interface ChartCanvasProps {
     activeMetric: string;
     data: any[];
 }
+
+export interface SidebarState {
+    isSidebarOpen: boolean;
+    toggleSidebar: () => void;
+}
