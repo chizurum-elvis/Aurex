@@ -7,15 +7,14 @@ import { useUser, useClerk } from '@clerk/nextjs';
 import { BarChart3, Star, TrendingUp, Settings, LogOut, Compass } from 'lucide-react';
 import { useSidebarStore } from '@/lib/store';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { IdentityProvider, useIdentity } from '@/context/IdentityContext'; // Import shared identity layer
+import { IdentityProvider, useIdentity } from '@/context/IdentityContext';
 
 function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
     const { user } = useUser();
     const { signOut } = useClerk();
-    const { isSidebarOpen } = useSidebarStore();
+    const { isSidebarOpen, toggleSidebar } = useSidebarStore();
 
-    // 🌟 DYNAMIC PIPELINE: Consume real-time values from context instead of un-customizable Clerk strings
     const { displayName } = useIdentity();
 
     const sidebarLinks = [
@@ -28,10 +27,21 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
     return (
         <div className="relative flex h-screen w-screen bg-zinc-950 text-zinc-50 pt-16 overflow-hidden">
 
+            {/* 🌟 MOBILE OVERLAY BACKDROP: Darkens background when sidebar is open on small screens */}
+            {isSidebarOpen && (
+                <div
+                    onClick={toggleSidebar}
+                    className="fixed inset-0 top-16 bg-black/40 backdrop-blur-sm z-30 lg:hidden transition-opacity duration-300"
+                />
+            )}
+
             {/* SIDEBAR NAVIGATION PANEL */}
             <aside
+                // 🌟 TAILWIND LAYER CHANGE: Swapped fixed left layouts for clear mobile breakpoints
                 className={`fixed left-0 bottom-0 top-16 bg-zinc-950 border-r border-zinc-900 flex flex-col justify-between transition-all duration-300 ease-in-out z-40 shrink-0 ${
-                    isSidebarOpen ? 'w-64' : 'w-0 -translate-x-64'
+                    isSidebarOpen
+                        ? 'w-64 translate-x-0'
+                        : 'w-64 -translate-x-full lg:w-0'
                 }`}
             >
                 {/* Top Links Section */}
@@ -50,6 +60,10 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
                                 <Link
                                     key={item.href}
                                     href={item.href}
+                                    onClick={() => {
+                                        // 🌟 Mobile-first optimization: Close sidebar automatically when selecting a panel view line link
+                                        if (window.innerWidth < 1024) toggleSidebar();
+                                    }}
                                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
                                         isActive
                                             ? 'bg-zinc-900 text-white font-medium border border-zinc-800'
@@ -64,7 +78,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
                     </nav>
                 </div>
 
-                {/* BOTTOM PROFILE AREA WITH DYNAMIC CONTEXT NAME OVERLAY */}
+                {/* BOTTOM PROFILE AREA */}
                 <div className="p-4 border-t border-zinc-900 bg-zinc-950 min-w-[256px] shrink-0 pb-6">
                     <Popover>
                         <PopoverTrigger asChild>
@@ -72,7 +86,6 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
                                 <div className="flex items-center gap-3 truncate">
                                     <img src={user?.imageUrl || 'https://via.placeholder.com/150'} alt="Avatar" className="w-8 h-8 rounded-full border border-zinc-800 shrink-0 object-cover" />
                                     <div className="flex flex-col truncate">
-                                        {/* 🌟 Display Name injected here into the main sidebar anchor */}
                                         <span className="text-xs font-semibold text-zinc-200 group-hover:text-white truncate">
                                             {displayName || 'User Account'}
                                         </span>
@@ -84,14 +97,12 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
                             </button>
                         </PopoverTrigger>
 
-                        {/* POPOVER TRIGGER DIALOG OVERLAY */}
                         <PopoverContent side="top" align="start" className="w-60 bg-zinc-950 border border-zinc-900 p-3 rounded-xl shadow-2xl space-y-3 z-50 mb-2">
                             <div>
                                 <p className="text-[10px] font-extrabold text-zinc-500 uppercase tracking-widest mb-2 px-2">Account Profile</p>
                                 <div className="flex items-center justify-between bg-zinc-900/40 border border-zinc-900 p-2 rounded-lg">
                                     <div className="flex items-center gap-2 truncate">
                                         <img src={user?.imageUrl || 'https://via.placeholder.com/150'} alt="Avatar" className="w-6 h-6 rounded-full object-cover border border-zinc-800" />
-                                        {/* 🌟 Custom display name dynamically mapped to the inner primary view node */}
                                         <span className="text-xs font-semibold text-zinc-200 truncate">
                                             {displayName}
                                         </span>
@@ -121,11 +132,14 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
 
             {/* MAIN CONTENT CANVAS CONTAINER */}
             <div
-                className={`flex-1 flex flex-col h-full overflow-hidden transition-all duration-300 ease-in-out ${
-                    isSidebarOpen ? 'pl-64' : 'pl-0'
+                // 🌟 THE RESPONSIVE SPACING FIX: Utilizes `lg:pl-64` only for large desktop monitors.
+                // On phones and mobile tablets, the content is full width (`pl-0`) to perfectly utilize space.
+                className={`flex-1 flex flex-col h-full w-full overflow-hidden transition-all duration-300 ease-in-out ${
+                    isSidebarOpen ? 'lg:pl-64 pl-0' : 'pl-0'
                 }`}
             >
-                <main className="flex-1 overflow-y-auto p-8 bg-zinc-950">
+                {/* 🌟 ADAPTIVE CONTENT INNER CANVAS: Changes view padding proportionally per device width scale */}
+                <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-zinc-950">
                     {children}
                 </main>
             </div>
@@ -140,7 +154,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const savedMetadataName = user?.publicMetadata?.customDisplayName as string;
     const activeGmailAddress = user?.primaryEmailAddress?.emailAddress;
     const standardProfileName = user?.fullName || user?.firstName;
-
 
     const dynamicClerkDefaultName = savedMetadataName || standardProfileName || activeGmailAddress || 'User Account';
 
