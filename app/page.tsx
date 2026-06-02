@@ -28,7 +28,6 @@ export default function HomePage() {
             <Navbar />
 
             {/* 1. HERO CONTROLLER AREA */}
-            {/* TAKES UP A GOOD AMOUNT OF SCREEN SPACE (min-h-[85vh]) before dropping into the next sections */}
             <header className="min-h-[85vh] w-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-center text-center relative pt-20">
 
                 {/* Enhanced atmospheric terminal layout ambient glows */}
@@ -52,9 +51,9 @@ export default function HomePage() {
                     Stream dynamic price matrices, track multi-source indexes, and evaluate asset cross-resistances instantly inside a sleek single-view interface.
                 </p>
 
-                {/* ACTION INTERFACE COMPRESSION BLOCK: Isolating your native AuthControls safely */}
-                <div className="mt-10 w-full max-w-xs sm:max-w-none flex justify-center transform transition-all duration-150 hover:scale-[1.01] active:scale-[0.99]">
-                    <div className="w-full sm:w-auto bg-zinc-900/40 rounded-xl p-1 border border-zinc-800/40 backdrop-blur-sm">
+                {/* 🌟 FIX: Removed forced mobile block expanding. Uses "inline-flex" and "w-auto" to mirror the desktop look perfectly */}
+                <div className="mt-10 inline-flex items-center justify-center transform transition-all duration-150 hover:scale-[1.01] active:scale-[0.99]">
+                    <div className="w-auto bg-zinc-900/40 rounded-xl p-1 border border-zinc-800/40 backdrop-blur-sm flex items-center justify-center">
                         <AuthControls
                             signInLabel="NONE"
                             signUpLabel="Open Terminal View"
@@ -65,7 +64,6 @@ export default function HomePage() {
             </header>
 
             {/* 2. THE FEATURE SHOWCASE SYSTEM */}
-            {/* Placed immediately below the large hero block so users scroll into it */}
             <div className="w-full bg-gradient-to-b from-transparent via-zinc-900/10 to-transparent border-y border-zinc-900/40">
                 <FeatureShowcase />
             </div>
@@ -84,8 +82,9 @@ export default function HomePage() {
                         Skip the bloated analytical suites. Get direct access to uncompromised index realities. Experience immediate setup functionality.
                     </p>
 
-                    <div className="w-full max-w-xs sm:max-w-none flex justify-center transform transition-all duration-150 hover:scale-[1.01] active:scale-[0.99]">
-                        <div className="w-full sm:w-auto bg-zinc-900/40 rounded-xl p-1 border border-zinc-800/40 backdrop-blur-sm">
+                    {/* 🌟 FIX: Applied matching alignment geometry to the footer conversion banner too */}
+                    <div className="inline-flex items-center justify-center transform transition-all duration-150 hover:scale-[1.01] active:scale-[0.99]">
+                        <div className="w-auto bg-zinc-900/40 rounded-xl p-1 border border-zinc-800/40 backdrop-blur-sm flex items-center justify-center">
                             <AuthControls
                                 signInLabel="NONE"
                                 signUpLabel="Initialize Connection Matrix"
